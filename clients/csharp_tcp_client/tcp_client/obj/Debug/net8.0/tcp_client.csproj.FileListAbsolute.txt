@@ -1,0 +1,14 @@
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\bin\Debug\net8.0\tcp_client.exe
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\bin\Debug\net8.0\tcp_client.deps.json
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\bin\Debug\net8.0\tcp_client.runtimeconfig.json
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\bin\Debug\net8.0\tcp_client.dll
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\bin\Debug\net8.0\tcp_client.pdb
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.AssemblyInfoInputs.cache
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.AssemblyInfo.cs
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.csproj.CoreCompileInputs.cache
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.dll
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\refint\tcp_client.dll
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.pdb
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\tcp_client.genruntimeconfig.cache
+C:\Users\ndeba\Desktop\UDESC\6 Semestre\DSD\T3_clients\csharp_tcp_client\tcp_client\obj\Debug\net8.0\ref\tcp_client.dll

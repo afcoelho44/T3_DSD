@@ -8,33 +8,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-        run();
+        Server server = new Server(65000, 5);
+        server.waitHosts();
+        server.mountRing();
+        server.startRing();
     }
-
-    private static void run() throws IOException {
-        System.out.println( "Server starting...");
-        while (isRunning){
-            Server server = new Server(new ServerSocket(65000));
-            server.serve();
-            continueRunning();
-        }
-    }
-
-    private static void continueRunning(){
-        String answer = "";
-        while (!answer.equals("y")){
-            System.out.println( "Want to restart server? [y/n]");
-            Scanner s = new Scanner(System.in);
-            answer = s.next();
-            if (answer.equals("n")) {
-                isRunning = false;
-                break;
-            }
-            System.out.println( "Server restarting...");
-        }
-        System.out.println("Shutting down");
-    }
-
-
-    private static boolean isRunning = true;
 }

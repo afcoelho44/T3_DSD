@@ -11,9 +11,9 @@ Z
 -src/main/java/udesc/br/commons/Constants.java,0\5\055fbed8d25a396b4efe043108f387ab9dac7a63
 ^
 .src/main/java/udesc/br/model/LanguageData.java,9\8\981f70f3019d6196487dba09c8d46bdd41e1b0e9
-j
-:src/main/java/udesc/br/Exceptions/ServerSideException.java,2\f\2fe629c9e03e449b5f03d7640ef3fcaeab2315f2
 i
 9src/main/java/udesc/br/exception/ServerSideException.java,a\3\a3a301ba56a57357cb2ef989c238f6a6b2c70456
 b
 2src/main/java/udesc/br/model/ClientConnection.java,c\2\c22518486ea9f82fec02e11550916add2e156b46
+V
+&src/main/java/udesc/br/model/Host.java,6\0\60110cf10f21eb89394b22ea405dd4ebd2123986

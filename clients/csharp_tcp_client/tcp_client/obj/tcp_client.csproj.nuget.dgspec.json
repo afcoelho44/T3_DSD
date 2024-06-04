@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj": {}
+    "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_DSD\\clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj": {
+    "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_DSD\\clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj",
+        "projectUniqueName": "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_DSD\\clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj",
         "projectName": "tcp_client",
-        "projectPath": "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj",
+        "projectPath": "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_DSD\\clients\\csharp_tcp_client\\tcp_client\\tcp_client.csproj",
         "packagesPath": "C:\\Users\\ndeba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_clients\\csharp_tcp_client\\tcp_client\\obj\\",
+        "outputPath": "C:\\Users\\ndeba\\Desktop\\UDESC\\6 Semestre\\DSD\\T3_DSD\\clients\\csharp_tcp_client\\tcp_client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

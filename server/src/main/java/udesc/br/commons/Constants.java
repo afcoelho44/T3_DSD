@@ -8,4 +8,6 @@ public class Constants {
     public static final String JAVASCRIPT = "javascript" + PNG;
     public static final String KOTLIN = "kotlin" + PNG;
     public static final String RUST = "rust" + PNG;
+
+    public static final String DELIMITER = ";; ";
 }

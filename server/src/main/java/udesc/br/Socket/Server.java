@@ -1,6 +1,6 @@
 package udesc.br.Socket;
 
-import udesc.br.model.ClientConnection;
+import udesc.br.model.Host;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,42 +9,44 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.ServerException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static udesc.br.commons.Colors.BLUE;
+import static udesc.br.commons.Constants.DELIMITER;
 
 public class Server {
     private final ServerSocket server;
     private Socket connection;
     private BufferedReader in;
     private PrintWriter out;
-    private List<ClientConnection> clients = new ArrayList<>();
+    private final int maxHosts;
+    private Host[] hosts;
+    private boolean ringCompleted = false;
 
-    public Server(ServerSocket server) throws IOException {
-        this.server = server;
+    public Server(int port, int maxHosts) throws IOException {
+        this.server = new ServerSocket(port);
+        this.maxHosts = maxHosts;
+        this.hosts = new Host[maxHosts];
     }
 
-    public void serve() throws IOException {
+    public void waitHosts() throws IOException {
+        if (ringCompleted) return;
         this.server.setReuseAddress(true);
-        String msg;
-        while(true){
+        int hostCount = 0;
+
+        while(hostCount < maxHosts){
             try{
+
                 System.out.println(BLUE + "Esperando requisição <-");
                 connection = server.accept();
-                System.out.println(BLUE + "Alguém solicitou");
+                String connectionIp = connection.getInetAddress().getHostAddress();
+                System.out.println(BLUE + connectionIp + " solicitou a entrada no anel");
+
                 setIn();
                 setOut();
 
-                msg = in.readLine();
-                String[] request = msg.split("; ");
-                System.out.println(request[1]);
+                Host host = new Host(connection, in, connectionIp, out, connection.getLocalPort());
+                hosts[hostCount++] = host;
 
-                ClientConnection client = new ClientConnection(connection, in, out, request);
-                client.start();
-                clients.add(client);
-
-                System.out.println("Requisição rodando na " + client.getName());
             }catch (ServerException e){
                 String error = e.getMessage();
                 System.out.println(error);
@@ -61,11 +63,41 @@ public class Server {
                 break;
             }
         }
+        ringCompleted = true;
     }
+
+    public void mountRing(){
+        if (!ringCompleted) return;
+        for (int i = 0; i < maxHosts; i++) {
+            Host host = hosts[i];
+            Host nextHost = hosts[(i + 1) % maxHosts];
+
+            host.setPeerIp(nextHost.getPeerIp());
+            host.setPeerPort(nextHost.getPeerPort());
+
+            sendMessageTo(host);
+        }
+    }
+
+    public void startRing(){
+
+        observeRing();
+    }
+
+    private void observeRing(){
+
+    }
+
     private void setIn() throws IOException {
         in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
     }
     private void setOut() throws IOException {
         out = new PrintWriter(connection.getOutputStream(), true);
     }
+
+    private void sendMessageTo(Host host) {
+        host.getOut().println(0 + DELIMITER + host.getPeerIp() + DELIMITER + host.getPeerPort());
+    }
+
+    private void sendTokenTo(Host host) {}
 }

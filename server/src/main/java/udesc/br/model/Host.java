@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Host {
+public class Host extends Thread{
     private final String ip;
     private final int port;
     private final BufferedReader in;

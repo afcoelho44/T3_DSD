@@ -1,10 +1,21 @@
 package udesc.dsd;
 
-import java.io.IOException;
-
 public class Main {
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException{
+        int basePort = 50000;
+        String localhost = "localhost";
 
-        ConnectionService connectionService = new ConnectionService("",64000);
+        String[] fakeUserNames = new String[]{
+                "Volecir Torres",
+                "Jacimiro",
+                "Rubisclaiton",
+                "Arandelina Barbosa Correia",
+                "Perislau Penácio"
+        };
+
+        for (int i = 0; i < 5; i++) {
+            new FakeClientThread(basePort + i, fakeUserNames[i]).start();
+            Thread.sleep(3000);
+        }
     }
 }

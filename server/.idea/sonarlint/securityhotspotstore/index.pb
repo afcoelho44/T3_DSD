@@ -11,3 +11,7 @@ i
 9src/main/java/udesc/br/exception/ServerSideException.java,a\3\a3a301ba56a57357cb2ef989c238f6a6b2c70456
 V
 &src/main/java/udesc/br/model/Host.java,6\0\60110cf10f21eb89394b22ea405dd4ebd2123986
+c
+3src/main/java/udesc/br/view/RingOperationsView.java,8\d\8dc19200f24620f0f820902ea29383ad7e0841f6
+^
+.src/main/java/udesc/br/view/HostPanelDraw.java,5\1\51e0781213a54d95427857c5a6df98de11db0ca4

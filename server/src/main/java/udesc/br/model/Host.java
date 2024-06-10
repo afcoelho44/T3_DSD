@@ -3,6 +3,7 @@ package udesc.br.model;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Objects;
 
 public class Host extends Thread{
     private final String ip;
@@ -56,5 +57,18 @@ public class Host extends Thread{
 
     public int getPort() {
         return port;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Host host = (Host) o;
+        return port == host.port && peerPort == host.peerPort && Objects.equals(ip, host.ip) && Objects.equals(in, host.in) && Objects.equals(out, host.out) && Objects.equals(connection, host.connection) && Objects.equals(peerIp, host.peerIp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ip, port, in, out, connection, peerIp, peerPort);
     }
 }

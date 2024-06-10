@@ -1,6 +1,7 @@
 package udesc.br;
 
 import udesc.br.Socket.Server;
+import udesc.br.view.RingOperationsView;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,6 +12,6 @@ public class Main {
         Server server = new Server(65000, 5);
         server.waitHosts();
         server.mountRing();
-        server.startRing();
+        //new RingOperationsView();
     }
 }

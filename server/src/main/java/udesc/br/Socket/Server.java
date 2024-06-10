@@ -15,6 +15,7 @@ import static udesc.br.commons.Constants.DELIMITER;
 import static udesc.br.commons.Constants.TOKEN;
 
 public class Server {
+    private final String token = "oPeloNoPeitoDoPeDoPedroEhPretoHeHeHe";
     private final ServerSocket server;
     private Socket connection;
     private BufferedReader in;
@@ -81,16 +82,6 @@ public class Server {
 
             sendMessageTo(host);
         }
-
-        startRing();
-    }
-
-    public void startRing() throws IOException, InterruptedException {
-        System.out.println(YELLOW + "Enviando token para o primeiro membro do anel!");
-        Thread.sleep(5000);
-        System.out.println(GREEN + "Token enviado!");
-        sendTokenTo(hosts[0]);
-        observeRing();
     }
 
     private void observeRing(){
@@ -103,15 +94,22 @@ public class Server {
     private void setIn() throws IOException {
         in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
     }
+
     private void setOut() throws IOException {
         out = new PrintWriter(connection.getOutputStream(), true);
     }
 
     private void sendMessageTo(Host host) {
-        host.getOut().println(0 + DELIMITER + host.getPeerIp() + DELIMITER + host.getPeerPort());
-    }
+        StringBuilder builder = new StringBuilder();
 
-    private void sendTokenTo(Host host) {
-        host.getOut().println(2 + DELIMITER + " " + DELIMITER + TOKEN);
+        builder.append(host.getPeerIp())
+                .append(DELIMITER)
+                .append(host.getPeerPort());
+
+        if (host.equals(hosts[0]))
+            builder.append(DELIMITER)
+                    .append(token);
+
+        host.getOut().println(builder);
     }
 }

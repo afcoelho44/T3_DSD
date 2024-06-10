@@ -11,10 +11,11 @@ import java.net.Socket;
 import java.util.Random;
 
 import static udesc.dsd.Commons.Constants.DELIMITER;
-import static udesc.dsd.Commons.Constants.TOKEN_MESSAGE;
 
 public class ConnectionService implements Loggable {
 
+    private String peerIp;
+    private int peerPort;
     private final int port;
     private BufferedReader in;
     private PrintWriter out;
@@ -22,69 +23,66 @@ public class ConnectionService implements Loggable {
     private Socket listenerConnection;
     private final ServerSocket listener;
     private final String userName;
-
+    private String[] request;
     private String token;
 
-    public ConnectionService(int port, String userName) throws IOException{
+    public ConnectionService(int port, String userName) throws IOException {
         this.port = port;
         this.userName = userName;
         listener = new ServerSocket(port);
+        listener.setReuseAddress(true);
         requestServerToEnterRing();
     }
 
-    private void sendTokenToPeer(){
-        out.println(1 + DELIMITER + TOKEN_MESSAGE + token);
-        token = null;
+    private void sendTokenToPeer() {
+        try {
+            out.println(token);
+            token = null;
+            yellowLog(userName + " sent token to peer at " + peerIp + ":" + peerPort);
+        } catch (Exception e) {
+            redLog("Failed to send token to peer: " + e.getMessage());
+        }
     }
 
-    public void doAction(String token){
+    public void doAction() {
         try {
-            if(token.isBlank()) return;
             yellowLog(userName + " is doing something... (token=" + token + ")");
             Thread.sleep(new Random().nextLong(1000, 3000));
-            greenLog(userName + " finished the action! Sending token to pair");
+            greenLog(userName + " finished the action! Sending token to peer");
             sendTokenToPeer();
         } catch (InterruptedException e) {
-            redLog(e.getMessage());
+            redLog("InterruptedException: " + e.getMessage());
+        } catch (Exception e) {
+            redLog("Exception in doAction: " + e.getMessage());
         }
     }
 
-    public void firstTokenHandleAction(String token){
-        if (token.contains(TOKEN_MESSAGE)){
-            token = token.replace(TOKEN_MESSAGE, "");
-            doAction(token);
-        }
-    }
-
-    private void listen(){
+    public void receiveTokenHandler() {
         try {
+            token = request[0];
+            doAction();
+        } catch (Exception e) {
+            redLog("Exception in receiveTokenHandler: " + e.getMessage());
+        }
+    }
+
+    private void listen() {
+        try {
+            listenerConnection = listener.accept();
+            setIn();
+            greenLog("Connection accepted from " + peerIp + ":" + peerPort);
             while (true) {
-                listenerConnection = listener.accept();
-                greenLog("Connection accepted.");
-
-                setIn();
-
                 String message = in.readLine();
-                String[] request = message.split(DELIMITER);
-
-                int font = Integer.parseInt(request[0]);
-
-                new Runnable[]{
-                        () -> setPeerConnection(request[1], Integer.parseInt(request[2])), //0 for server messages;
-                        () -> doAction(request[1]),                                             //1 for client messages;
-                        () -> firstTokenHandleAction(request[2])                           //2 for token handle;
-                }[font].run();
-
-                listenerConnection.close();
+                request = message.split(DELIMITER);
+                receiveTokenHandler();
             }
         } catch (IOException e) {
-            redLog(e.getMessage());
+            redLog("IOException in listen: " + e.getMessage());
         }
     }
 
-    private void requestServerToEnterRing(){
+    private void requestServerToEnterRing() {
         try {
-
             Socket serverConnection = new Socket("localhost", 65000);
             PrintWriter out = new PrintWriter(serverConnection.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(serverConnection.getInputStream()));
@@ -96,43 +94,50 @@ public class ConnectionService implements Loggable {
             boolean serverAccepted = response.equals("ok");
 
             if (serverAccepted) greenLog("Server accepted request. You are in the ring!");
-             else {
+            else {
                 redLog("Server refused request.");
                 return;
             }
 
             response = in.readLine();
-            String[] request = response.split(DELIMITER);
 
-            setPeerConnection(request[1], Integer.parseInt(request[2]));
+            request = response.split(DELIMITER);
+
+            this.peerIp = request[0];
+            this.peerPort = Integer.parseInt(request[1]);
+            createPeerConnection();
 
             serverConnection.close();
 
             new Thread(this::listen).start();
-            purpleLog("Comecei a ouvir.");
-            if(port == 50000)
-                new Thread(() -> {
-                    token = "testeTeste";
-                    doAction(token);
-                }).start();
+            purpleLog("Started listening.");
+
+            if(request.length > 2){
+                token = request[2];
+                log(userName + " received token: " + token + ". Awaiting any seconds to circle the ring.");
+                doAction();
+            }
+
         } catch (IOException e) {
-            redLog(e.getMessage());
+            redLog("IOException in requestServerToEnterRing: " + e.getMessage());
         }
     }
 
-    public void setPeerConnection(String ip, int port){
+    public void createPeerConnection() {
         try {
-            peerConnection = new Socket(ip, port);
+            peerConnection = new Socket(peerIp, peerPort);
             setOut();
+            greenLog("Peer connection established with " + peerIp + ":" + peerPort);
         } catch (IOException e) {
-            redLog(e.getMessage());
+            redLog("IOException in createPeerConnection: " + e.getMessage());
         }
     }
 
-    public void setIn() throws IOException{
+    public void setIn() throws IOException {
         this.in = new BufferedReader(new InputStreamReader(listenerConnection.getInputStream()));
     }
-    private void setOut() throws IOException{
+
+    private void setOut() throws IOException {
         this.out = new PrintWriter(peerConnection.getOutputStream(), true);
     }
 }

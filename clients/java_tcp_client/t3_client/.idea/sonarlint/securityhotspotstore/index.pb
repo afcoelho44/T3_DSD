@@ -11,9 +11,7 @@ e
 +src/main/java/udesc/dsd/Commons/Colors.java,c\a\ca98397b8d7b9c6e30b22f1273d86a1fb0db9296
 Z
 *src/main/java/udesc/dsd/Util/Loggable.java,6\f\6ffd62095acb1bcf58899a82fc82cf29a5e53a39
-h
-8src/main/java/udesc/dsd/Socket/ServerMessageHandler.java,7\3\7390bd7177419c52fb2aab43683724c1a3c36f63
-b
-2src/main/java/udesc/dsd/Socket/MessageHandler.java,e\1\e124d158873c553e462310cbd639dbf1eaedbe5e
-n
->src/main/java/udesc/dsd/Socket/PreviousPeerMessageHandler.java,8\9\89defd7a3fcf589823ec221ada67176f68f7500b
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+U
+%src/main/java/udesc/dsd/MainView.java,3\0\30424277f9d10a962186c2dd8b4a2b4ec61392d3

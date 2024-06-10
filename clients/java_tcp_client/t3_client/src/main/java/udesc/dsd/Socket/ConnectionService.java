@@ -71,11 +71,13 @@ public class ConnectionService implements Loggable {
             listenerConnection = listener.accept();
             setIn();
             greenLog("Connection accepted from " + peerIp + ":" + peerPort);
+
             while (true) {
                 String message = in.readLine();
                 request = message.split(DELIMITER);
                 receiveTokenHandler();
             }
+
         } catch (IOException e) {
             redLog("IOException in listen: " + e.getMessage());
         }
@@ -114,12 +116,13 @@ public class ConnectionService implements Loggable {
 
             if(request.length > 2){
                 token = request[2];
-                log(userName + " received token: " + token + ". Awaiting any seconds to circle the ring.");
+                log(userName + " received token: " + token + ". Awaiting any instants to start the ring.");
+                Thread.sleep(500);
                 doAction();
             }
 
-        } catch (IOException e) {
-            redLog("IOException in requestServerToEnterRing: " + e.getMessage());
+        } catch (IOException | InterruptedException e) {
+            redLog("Exception during requesting server to enter ring: " + e.getMessage());
         }
     }
 

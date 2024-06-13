@@ -78,7 +78,7 @@ public class HomeView extends JFrame {
     }
 
     private void sendRequest(){
-
+        service.hasActivity();
     }
 
     private void disableInputFields() {

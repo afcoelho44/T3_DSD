@@ -1,7 +1,5 @@
 package udesc.dsd.Socket;
 
-import udesc.dsd.Util.Loggable;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
+import udesc.dsd.Util.Loggable;
+import udesc.dsd.Util.Loggable;
 
 import static udesc.dsd.Commons.Constants.DELIMITER;
 
@@ -31,7 +31,6 @@ public class ConnectionService implements Loggable {
         this.userName = userName;
         listener = new ServerSocket(port);
         listener.setReuseAddress(true);
-        requestServerToEnterRing();
     }
 
     private void sendTokenToPeer() {
@@ -83,22 +82,23 @@ public class ConnectionService implements Loggable {
         }
     }
 
-    private void requestServerToEnterRing() {
+    public boolean requestServerToEnterRing() {
         try {
             Socket serverConnection = new Socket("localhost", 65000);
             PrintWriter out = new PrintWriter(serverConnection.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(serverConnection.getInputStream()));
 
-            out.println(port);
+            out.println(userName + DELIMITER + port);
             yellowLog("Request sent to server. Await for response...");
 
             String response = in.readLine();
             boolean serverAccepted = response.equals("ok");
 
-            if (serverAccepted) greenLog("Server accepted request. You are in the ring!");
+            if (serverAccepted)
+                greenLog("Server accepted request. You are in the ring!");
             else {
                 redLog("Server refused request.");
-                return;
+                return false;
             }
 
             response = in.readLine();
@@ -114,7 +114,7 @@ public class ConnectionService implements Loggable {
             new Thread(this::listen).start();
             purpleLog("Started listening.");
 
-            if(request.length > 2){
+            if (request.length > 2) {
                 token = request[2];
                 log(userName + " received token: " + token + ". Awaiting any instants to start the ring.");
                 Thread.sleep(500);
@@ -123,7 +123,10 @@ public class ConnectionService implements Loggable {
 
         } catch (IOException | InterruptedException e) {
             redLog("Exception during requesting server to enter ring: " + e.getMessage());
+            return false;
         }
+
+        return true;
     }
 
     public void createPeerConnection() {

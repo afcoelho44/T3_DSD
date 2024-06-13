@@ -40,12 +40,15 @@ public class Server {
                 System.out.println(BLUE + "Esperando requisição <-");
                 connection = server.accept();
                 String connectionIp = connection.getInetAddress().getHostAddress();
-                System.out.println(YELLOW + connectionIp + " solicitou a entrada no anel");
 
                 setIn();
                 setOut();
 
-                int port = Integer.parseInt(in.readLine());
+                String[] message = in.readLine().split(DELIMITER);
+
+                String username = message[0];
+                int port = Integer.parseInt(message[1]);
+                System.out.println(YELLOW + username + "("+connectionIp+":"+ port + ")" + " solicitou a entrada no anel");
 
                 Host host = new Host(connection, in, connectionIp, out, port);
                 hosts[hostCount++] = host;

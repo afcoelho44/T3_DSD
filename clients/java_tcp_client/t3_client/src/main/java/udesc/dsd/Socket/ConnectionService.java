@@ -25,9 +25,11 @@ public class ConnectionService implements Loggable {
     private final String userName;
     private String[] request;
     private String token;
-    private boolean hasActivity = false;
+    private volatile boolean hasActivity = false;
+    private final String serverIp;
 
-    public ConnectionService(int port, String userName) throws IOException {
+    public ConnectionService(String serverIp, int port, String userName) throws IOException {
+        this.serverIp = serverIp;
         this.port = port;
         this.userName = userName;
         listener = new ServerSocket(port);
@@ -38,7 +40,7 @@ public class ConnectionService implements Loggable {
         try {
             out.println(token);
             token = null;
-            yellowLog(userName + " sent token to peer at " + peerIp + ":" + peerPort);
+            yellowLog("Sending token to peer at " + peerIp + ":" + peerPort);
         } catch (Exception e) {
             redLog("Failed to send token to peer: " + e.getMessage());
         }
@@ -47,13 +49,11 @@ public class ConnectionService implements Loggable {
     public void doAction() {
         try {
             if (hasActivity) {
-                greenLog(userName + " is doing something... (token=" + token + ")");
-                Thread.sleep(new Random().nextLong(1000, 3000));
-                hasActivity = false;
-                greenLog(userName + " finished the action! Sending token to peer");
+                doRequestedActivity();
             } else {
                 blueLog(userName + " has the token");
-                Thread.sleep(500);
+                Thread.sleep(2000);
+                while (hasActivity) Thread.onSpinWait();
             }
 
             sendTokenToPeer();
@@ -62,6 +62,13 @@ public class ConnectionService implements Loggable {
         } catch (Exception e) {
             redLog("Exception in doAction: " + e.getMessage());
         }
+    }
+
+    private void doRequestedActivity() throws IOException, InterruptedException {
+        greenLog(userName + " is doing something... (token=" + token + ")");
+        Thread.sleep(5000);
+        hasActivity = false;
+        greenLog(userName + " finished the action! Sending token to peer");
     }
 
     public void receiveTokenHandler() {
@@ -92,7 +99,7 @@ public class ConnectionService implements Loggable {
 
     public boolean requestServerToEnterRing() {
         try {
-            Socket serverConnection = new Socket("localhost", 65000);
+            Socket serverConnection = new Socket(serverIp, 65000);
             PrintWriter out = new PrintWriter(serverConnection.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(serverConnection.getInputStream()));
 
@@ -149,6 +156,15 @@ public class ConnectionService implements Loggable {
 
     public void hasActivity() {
         hasActivity = true;
+        if(token != null) {
+            try {
+                doRequestedActivity();
+            } catch (IOException e) {
+                redLog("IOException in hasActivity: " + e.getMessage());
+            } catch (InterruptedException e) {
+                redLog("InterruptedException: " + e.getMessage());
+            }
+        }
     }
 
     public void setIn() throws IOException {

@@ -1,8 +1,6 @@
 
 Q
 !src/main/java/udesc/dsd/Main.java,5\e\5e7bd4cb8ca790527aa55c1178eff9bd84c20744
-]
--src/main/java/udesc/dsd/FakeClientThread.java,0\2\02fb2da434df8744a2e7415b051504f87e972c47
 e
 5src/main/java/udesc/dsd/Socket/ConnectionService.java,0\6\06dddd544e659050a9155ad0ff33f010ba11ef75
 ^
@@ -13,7 +11,5 @@ Z
 *src/main/java/udesc/dsd/Util/Loggable.java,6\f\6ffd62095acb1bcf58899a82fc82cf29a5e53a39
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-U
-%src/main/java/udesc/dsd/MainView.java,3\0\30424277f9d10a962186c2dd8b4a2b4ec61392d3
 U
 %src/main/java/udesc/dsd/HomeView.java,d\f\df0c0183072215a1605c77eb5697fa0d0b149c76

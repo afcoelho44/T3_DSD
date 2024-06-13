@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="t3_client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/t3_client_jar</output-path>
+    <root id="archive" name="t3_client.jar">
+      <element id="module-output" name="t3_client" />
+    </root>
+  </artifact>
+</component>

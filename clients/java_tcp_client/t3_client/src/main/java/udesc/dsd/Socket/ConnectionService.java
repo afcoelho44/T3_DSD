@@ -146,10 +146,11 @@ public class ConnectionService implements Loggable {
 
     public void createPeerConnection() {
         try {
+            Thread.sleep(1000);
             peerConnection = new Socket(peerIp, peerPort);
             setOut();
             greenLog("Peer connection established with " + peerIp + ":" + peerPort);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             redLog("IOException in createPeerConnection: " + e.getMessage());
         }
     }

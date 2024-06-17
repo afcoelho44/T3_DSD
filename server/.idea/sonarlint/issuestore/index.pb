@@ -11,3 +11,5 @@ i
 9src/main/java/udesc/br/exception/ServerSideException.java,a\3\a3a301ba56a57357cb2ef989c238f6a6b2c70456
 V
 &src/main/java/udesc/br/model/Host.java,6\0\60110cf10f21eb89394b22ea405dd4ebd2123986
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec

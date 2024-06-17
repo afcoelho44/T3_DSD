@@ -11,5 +11,6 @@ public class Main {
         Server server = new Server(65000, 5);
         server.waitHosts();
         server.mountRing();
+        server.observeRing();
     }
 }

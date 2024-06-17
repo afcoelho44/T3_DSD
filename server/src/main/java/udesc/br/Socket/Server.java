@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.ServerException;
@@ -40,6 +41,10 @@ public class Server {
                 System.out.println(BLUE + "Esperando requisição <-");
                 connection = server.accept();
                 String connectionIp = connection.getInetAddress().getHostAddress();
+
+                if(connectionIp.equals("127.0.0.1")){
+                    connectionIp = InetAddress.getLocalHost().getHostAddress();
+                }
 
                 setIn();
                 setOut();
@@ -87,7 +92,7 @@ public class Server {
         }
     }
 
-    private void observeRing(){
+    public void observeRing(){
         System.out.println("Obiservanu");
         while (true){
 
